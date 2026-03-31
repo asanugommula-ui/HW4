@@ -1,7 +1,12 @@
 package spendreport;
 
-public class DetailedAlert {
+import java.util.Objects;
 
+
+@SuppressWarnings("unused")
+public final class DetailedAlert {
+
+    // Changed from base Alert's single 'id' field to include detailed transaction information
     private long accountId;
     private long timestamp;
     private String zipCode;
@@ -10,6 +15,7 @@ public class DetailedAlert {
     public DetailedAlert() {
     }
 
+    // Modified constructor to accept detailed fields instead of just id
     public DetailedAlert(long accountId, long timestamp, String zipCode, double amount) {
         this.accountId = accountId;
         this.timestamp = timestamp;
@@ -49,6 +55,28 @@ public class DetailedAlert {
         this.amount = amount;
     }
 
+    // Modified equals to compare all detailed fields instead of just id
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DetailedAlert that = (DetailedAlert) o;
+        return accountId == that.accountId
+                && timestamp == that.timestamp
+                && Double.compare(that.amount, amount) == 0
+                && Objects.equals(zipCode, that.zipCode);
+    }
+
+    // Modified hashCode to include all detailed fields instead of just id
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountId, timestamp, zipCode, amount);
+    }
+
+    // Modified toString to output all detailed fields instead of just id
     @Override
     public String toString() {
         return "DetailedAlert{" +
